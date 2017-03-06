@@ -59,7 +59,12 @@ public class Etat{
 	 */
 	public Etat(Labyrinthe lab, FonctionHeuristique heurist){
 		this._labyrinthe=lab;
-		//TODO save val heurist
+		this._xCour=lab.getXEntree();
+		this._yCour=lab.getYEntree();
+		this._pere=null;
+		this._valG=0;
+		this._valF= heurist==null?0:this._valG+heurist.heuristique(this);//???????
+		this._coups=new ArrayList<>();
 	}
 	
 	
@@ -171,22 +176,18 @@ public class Etat{
 	 * @return vrai si la case vide peut être déplacée dans la direction d.
 	 */
 	public boolean deplacementPossible(Deplacement d){
+		//a test
 		switch(d){
 			case haut:
-
-				break;
+				return this.estAccessible(this._xCour, this._yCour-1);
 			case bas:
-
-				break;
+				return this.estAccessible(this._xCour, this._yCour+1);
 			case gauche:
-
-				break;
+				return this.estAccessible(this._xCour-1, this._yCour);
 			case droite:
-
-				break;
+				return this.estAccessible(this._xCour+1, this._yCour);
 		}
-
-		return true;
+		return false;
 	}
 	
 	
@@ -198,8 +199,28 @@ public class Etat{
 	 * @return l'état créé à partir de l'état courant
 	 */
 	public Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
-		//TODO
-		return null;
+
+		Etat e=new Etat(this);
+		e._coups.add(d);
+		e._pere=this;
+		e._valG++;
+		e._valF=e._valG+heurist.heuristique(e);
+
+		switch(d){
+			case haut:
+				e._yCour--;
+				break;
+			case bas:
+				e._yCour++;
+				break;
+			case gauche:
+				e._xCour--;
+				break;
+			case droite:
+				e._xCour++;
+				break;
+		}
+		return e;
 	}
 	
 	
@@ -211,20 +232,25 @@ public class Etat{
 	 * @return les états successeurs créés.
 	 */
 	public List<Etat> getSuccesseurs(FonctionHeuristique heurist){
-		//TODO
-		return null;
+		List<Etat> l = new ArrayList<>();
+		Arrays.stream(Deplacement.values()).forEach(dep -> {
+			if (this.deplacementPossible(dep)) {
+				l.add(this.etendEtat(dep, heurist));
+			}
+		});
+		return l;
 	}
-	
-	
+
+
 	/**
 	 * Méthode qui dit si 2 états sont égaux, du point de vue de la configuration.
 	 * @param e : l'état avec lequel comparer l'état courant.
 	 * @return vrai si les états correspondent à la même configuration.
 	 */
-	public boolean equals(Etat e){
-		//TODO
-		return true;
-	}
+//	public boolean equals(Etat e){
+//		//TODO
+//		return true;
+//	}
 	
 	
 	
