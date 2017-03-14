@@ -9,6 +9,9 @@
  *
  */
 
+import com.sun.istack.internal.NotNull;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -73,7 +76,7 @@ public class Etat{
 	 * @param lab : le labyrinthe courant.
 	 */
 	public Etat(Labyrinthe lab){
-		this(lab, null);
+		this(lab, new HeuristiqueEuclidienne());
 	}
 	
 	
@@ -90,9 +93,39 @@ public class Etat{
 		this._xCour=e.getX();
 		this._yCour=e.getY();
 	}
-	
-	
-	
+
+	public void set_labyrinthe(Labyrinthe _labyrinthe) {
+		this._labyrinthe = _labyrinthe;
+	}
+
+	public void set_xCour(int _xCour) {
+		this._xCour = _xCour;
+	}
+
+	public void set_yCour(int _yCour) {
+		this._yCour = _yCour;
+	}
+
+	public void set_pere(Etat _pere) {
+		this._pere = _pere;
+	}
+
+	public void set_valG(int _valG) {
+		this._valG = _valG;
+	}
+
+	public void set_valF(int _valF) {
+		this._valF = _valF;
+	}
+
+	public void set_coups(List<Deplacement> _coups) {
+		this._coups = _coups;
+	}
+
+	public void add_coups(Deplacement dep){
+		this._coups.add(dep);
+	}
+
 	/**
 	 * Méthode qui donne le père de l'état courant.
 	 * @return le père de l'état courant.
@@ -157,8 +190,11 @@ public class Etat{
 	public int getY(){
 		return this._yCour;
 	}
-	
-	
+
+	public Labyrinthe get_labyrinthe() {
+		return _labyrinthe;
+	}
+
 	/**
 	 * Méthode qui dit si l'état courant est un état final.
 	 * @return vrai si l'état courant correspond à un état final.
@@ -177,17 +213,22 @@ public class Etat{
 	 */
 	public boolean deplacementPossible(Deplacement d){
 		//a test
+		Boolean b=false;
 		switch(d){
 			case haut:
-				return this.estAccessible(this._xCour, this._yCour-1);
+				b= this.estAccessible(this._xCour, this._yCour-1);
+				break;
 			case bas:
-				return this.estAccessible(this._xCour, this._yCour+1);
+				b= this.estAccessible(this._xCour, this._yCour+1);
+				break;
 			case gauche:
-				return this.estAccessible(this._xCour-1, this._yCour);
+				b= this.estAccessible(this._xCour-1, this._yCour);
+				break;
 			case droite:
-				return this.estAccessible(this._xCour+1, this._yCour);
+				b= this.estAccessible(this._xCour+1, this._yCour);
+				break;
 		}
-		return false;
+		return b;
 	}
 	
 	
@@ -199,25 +240,25 @@ public class Etat{
 	 * @return l'état créé à partir de l'état courant
 	 */
 	public Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
-
+//		System.out.println("bug");
 		Etat e=new Etat(this);
-		e._coups.add(d);
-		e._pere=this;
-		e._valG++;
-		e._valF=e._valG+heurist.heuristique(e);
+		e.add_coups(d);
+		e.set_pere(this);
+		e.set_valG(getValG()+1);
+		e.set_valF(e.getValG()+heurist.heuristique(e));
 
 		switch(d){
 			case haut:
-				e._yCour--;
+				e.set_yCour(this._yCour-1);
 				break;
 			case bas:
-				e._yCour++;
+				e.set_yCour(this._yCour+1);
 				break;
 			case gauche:
-				e._xCour--;
+				e.set_xCour(this._xCour-1);
 				break;
 			case droite:
-				e._xCour++;
+				e.set_xCour(this._xCour+1);
 				break;
 		}
 		return e;
@@ -232,13 +273,19 @@ public class Etat{
 	 * @return les états successeurs créés.
 	 */
 	public List<Etat> getSuccesseurs(FonctionHeuristique heurist){
-		List<Etat> l = new ArrayList<>();
-		Arrays.stream(Deplacement.values()).forEach(dep -> {
-			if (this.deplacementPossible(dep)) {
-				l.add(this.etendEtat(dep, heurist));
-			}
-		});
-		return l;
+//		List<Etat> l = new ArrayList<>();
+//		Arrays.stream(Deplacement.values()).forEach(dep -> {
+//			if (this.deplacementPossible(dep)) {
+//				l.add(this.etendEtat(dep, heurist));
+//			}
+//		});
+//		return l;
+
+		return Arrays.stream(Deplacement.values())
+				.filter(this::deplacementPossible)
+				.collect(ArrayList::new,
+						(array, deplacement) -> array.add(this.etendEtat(deplacement, heurist)),
+						ArrayList::addAll);
 	}
 
 
@@ -247,20 +294,25 @@ public class Etat{
 	 * @param e : l'état avec lequel comparer l'état courant.
 	 * @return vrai si les états correspondent à la même configuration.
 	 */
-//	public boolean equals(Etat e){
-//		//TODO
-//		return true;
-//	}
-	
-	
-	
+	@Override
+	public boolean equals(Object e) {
+		if (this == e) return true;
+		if (e == null || getClass() != e.getClass()) return false;
+
+		Etat etat = (Etat) e;
+
+		if (_xCour != etat._xCour) return false;
+		if (_yCour != etat._yCour) return false;
+		return _labyrinthe != null ? _labyrinthe.equals(etat._labyrinthe) : etat._labyrinthe == null;
+
+	}
+
 	/**
 	 * Méthode qui affiche la séquence de configurations.
 	 */
 	public void afficherParcours(){
-		//TODO
+		System.out.println(this._coups);
 	}
-
 	
 	/**
 	 * Méthode qui donne la représentation de l'état, sous forme de chaîne, comprenant
@@ -268,11 +320,16 @@ public class Etat{
 	 * coups et la suite de déplacements de la case vide.
 	 * @return la chaîne représentant l'état.
 	 */
-	public String toString(){
-		String str = "";
-		
-		
-		return str;
+	public String toString() {
+		return "Etat{" +
+				"_labyrinthe=" + _labyrinthe.toString() +
+				", _xCour=" + _xCour +
+				", _yCour=" + _yCour +
+				", _pere=" + _pere +
+				", _valG=" + _valG +
+				", _valF=" + _valF +
+				", _coups=" + _coups +
+				'}';
 	}
 
 }

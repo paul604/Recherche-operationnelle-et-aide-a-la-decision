@@ -25,18 +25,17 @@ public class ResolutionLabyrinthe {
 	 * @param etatInitial : l'état initial du jeu.
 	 * @param heuristique : l'heuristique utilisée pour évaluer les états du jeu.
 	 */
-	public ResolutionLabyrinthe(Etat etatInitial, FonctionHeuristique heuristique){
-		//TODO
+	public ResolutionLabyrinthe(Etat etatInitial, FonctionHeuristique heuristique) {
+		this._etatInitial = etatInitial;
+		this._heuristique = heuristique;
 	}
-	
-	
+
 	/**
 	 * Méthode qui calcule l'état final atteint à partir de l'état initial, en utilisant
 	 * l'algorithme A* avec l'heuristique considérée.
 	 * @return l'état final s'il est accessible ou null sinon;
 	 */
 	public Etat getEtatFinal(){
-		//TODO
-		return null;
+		return AEtoile.algoAEtoile(_etatInitial, _heuristique);
 	}
 }

@@ -121,4 +121,15 @@ public class Labyrinthe {
 		return Arrays.deepEquals(_labyrinthe, that._labyrinthe);
 
 	}
+
+	@Override
+	public String toString() {
+		return "Labyrinthe{" +
+				"_labyrinthe=" + Arrays.toString(_labyrinthe) +
+				", _xEntree=" + _xEntree +
+				", _yEntree=" + _yEntree +
+				", _xSortie=" + _xSortie +
+				", _ySortie=" + _ySortie +
+				'}';
+	}
 }

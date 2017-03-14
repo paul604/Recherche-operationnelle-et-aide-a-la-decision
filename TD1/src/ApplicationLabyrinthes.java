@@ -50,7 +50,7 @@ public class ApplicationLabyrinthes {
 		//heuristique 2
 		System.out.println("Algorithme A* avec l'heuristique de Manhattan");
 		Labyrinthe lab2 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y); 
-		ResolutionLabyrinthe resolLab2 = new ResolutionLabyrinthe(new Etat(lab1), new HeuristiqueManhattan());
+		ResolutionLabyrinthe resolLab2 = new ResolutionLabyrinthe(new Etat(lab2), new HeuristiqueManhattan());
 		Etat etatFinal2 = resolLab2.getEtatFinal();
 		if(etatFinal2 != null){
 			System.out.println("Nombre de déplacements : " + etatFinal2.getNbCoups());

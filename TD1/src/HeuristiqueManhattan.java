@@ -1,3 +1,5 @@
+import static java.lang.Math.abs;
+
 /**
  * TP1 : Labyrinthes - Recherche opérationnelle et aide à la décision
  * Classe HeuristiqueManhattan : utilisation de la distance de Manhattan pour calculer
@@ -19,8 +21,12 @@ public class HeuristiqueManhattan implements FonctionHeuristique {
 	 * @return la distance de Manhattan. 
 	 */
 	public int heuristique(Etat e) {
-		//TODO
-		return 0;
+		int xCour = e.getX();
+		int yCour = e.getY();
+		int xFin = e.get_labyrinthe().getXSortie();
+		int yFin = e.get_labyrinthe().getYSortie();
+
+		return abs(xCour-xFin)+abs(yCour-yFin);
 	}
 
 }
