@@ -29,7 +29,7 @@ public class AEtoile {
 		while (!ouvert.isEmpty() && etatFinal==null){
 //			System.out.println("1");
 			etat=ouvert.first();
-			System.out.println(etat);
+//			System.out.println(etat);
 			if(etat.estFinal()){
 				etatFinal=etat;
 			}else{
@@ -51,7 +51,7 @@ public class AEtoile {
 						ouvert.add(succ);
 					}
 
-					System.out.println(succ);
+//					System.out.println(succ);
 
 				});
 			}

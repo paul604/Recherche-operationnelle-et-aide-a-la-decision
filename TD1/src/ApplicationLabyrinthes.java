@@ -40,10 +40,6 @@ public class ApplicationLabyrinthes {
 		Labyrinthe lab1 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
 
 
-//		Arrays.stream(Deplacement.values())
-//				.filter(new Etat(lab1)::deplacementPossible)
-//				.forEach(deplacement -> System.out.println(deplacement.toString()));
-
 		ResolutionLabyrinthe resolLab1 = new ResolutionLabyrinthe(new Etat(lab1), new HeuristiqueEuclidienne());
 		Etat etatFinal1 = resolLab1.getEtatFinal();
 
