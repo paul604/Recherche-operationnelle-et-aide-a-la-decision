@@ -20,15 +20,16 @@ public class AEtoile {
 	 * @return l'état final obtenu par l'algorithme A* (ou null s'il n'y a pas de résultat).
 	 */
 	public static Etat algoAEtoile(Etat etatInit, FonctionHeuristique heurist){
-		List<Etat> ouvert = new ArrayList<>();
+		FileEtats ouvert = new FileEtats();
 		ouvert.add(etatInit);
 		List<Etat> fermes = new ArrayList<>();
 		Etat etatFinal=null;
 		Etat etat;
 
 		while (!ouvert.isEmpty() && etatFinal==null){
-			System.out.println("1");
-			etat=ouvert.get(0);
+//			System.out.println("1");
+			etat=ouvert.first();
+			System.out.println(etat);
 			if(etat.estFinal()){
 				etatFinal=etat;
 			}else{
@@ -40,8 +41,8 @@ public class AEtoile {
 							fermes.remove(succFerme);
 							ouvert.add(succ);
 						}
-					}else if(ouvert.contains(succ)){
-						Etat succOuver = ouvert.get(ouvert.indexOf(succ));
+					}else if(ouvert.get(succ)!=null){
+						Etat succOuver = ouvert.get(succ);
 						if(heurist.heuristique(succ)< heurist.heuristique(succOuver)){
 							ouvert.remove(succOuver);
 							ouvert.add(succ);
@@ -50,11 +51,10 @@ public class AEtoile {
 						ouvert.add(succ);
 					}
 
-//					System.out.println(succ);
+					System.out.println(succ);
 
 				});
 			}
-			ouvert.stream().sorted(new ComparateurEtat());
 		}
 
 		return etatFinal;

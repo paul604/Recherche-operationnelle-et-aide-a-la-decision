@@ -98,7 +98,8 @@ public class Labyrinthe {
 	 * @return vrai si la case courante est accessible et faux si c'est un mur.
 	 */
 	public boolean estAccessible(int x, int y){
-		return x>0 && x<this._labyrinthe.length && y>0 && y<this._labyrinthe[0].length && this._labyrinthe[x][y];
+	    //x=y et y=x
+        return y>=0 && y<this._labyrinthe.length && x>=0 && x<this._labyrinthe[0].length && this._labyrinthe[y][x];
 	}
 
 

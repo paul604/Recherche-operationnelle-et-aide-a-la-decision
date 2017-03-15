@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * TP1 : Labyrinthes - Recherche opérationnelle et aide à la décision
  * Classe ApplicationTaquin
@@ -32,12 +34,20 @@ public class ApplicationLabyrinthes {
 	public static void main(String[] args){
 		/* algo A* avec le 1er labyrinthe */
 		System.out.println("\n\t***** En partant du premier état initial *****\n\n");
-		
+
 		//heuristique 1
 		System.out.println("Algorithme A* avec l'heuristique euclidienne");
-		Labyrinthe lab1 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y); 
+		Labyrinthe lab1 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
+
+
+//		Arrays.stream(Deplacement.values())
+//				.filter(new Etat(lab1)::deplacementPossible)
+//				.forEach(deplacement -> System.out.println(deplacement.toString()));
+
 		ResolutionLabyrinthe resolLab1 = new ResolutionLabyrinthe(new Etat(lab1), new HeuristiqueEuclidienne());
 		Etat etatFinal1 = resolLab1.getEtatFinal();
+
+
 		if(etatFinal1 != null){
 			System.out.println("Nombre de déplacements : " + etatFinal1.getNbCoups());
 			etatFinal1.afficherParcours();

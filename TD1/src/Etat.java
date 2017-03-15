@@ -9,10 +9,9 @@
  *
  */
 
-import com.sun.istack.internal.NotNull;
-
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Etat{
@@ -239,10 +238,14 @@ public class Etat{
 	 * @param heurist : la fonction heuristique utilisée pour étendre l'état.
 	 * @return l'état créé à partir de l'état courant
 	 */
+	//TODO
 	public Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
 //		System.out.println("bug");
 		Etat e=new Etat(this);
-		e.add_coups(d);
+        List<Deplacement> l = new ArrayList<>();
+        l.addAll(this._coups);
+        l.add(d);
+		e.set_coups(l);
 		e.set_pere(this);
 		e.set_valG(getValG()+1);
 		e.set_valF(e.getValG()+heurist.heuristique(e));
