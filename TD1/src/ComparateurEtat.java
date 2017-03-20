@@ -22,13 +22,22 @@ public class ComparateurEtat implements Comparator<Etat> {
 	 * @return 1 si e1 est inférieur à e2, 0 si e1 et e2 sont égaux et -1 si e1 est supérieur à e2.
 	 */
 	public int compare(Etat e1, Etat e2) {
-		if (e1.getValF() < e2.getValF()){
+//		if (e1.getValF() < e2.getValF()){
+//			return 1;
+//		}else if(e1.getValF() > e2.getValF()){
+//			return -1;
+//		}else if(e1.getValG() < e2.getValG()){
+//			return 1;
+//		}else if(e1.getValG() > e2.getValG()){
+//			return -1;
+//		}
+		if (e1.getValF() > e2.getValF()){
 			return 1;
-		}else if(e1.getValF() > e2.getValF()){
+		}else if(e1.getValF() < e2.getValF()){
 			return -1;
-		}else if(e1.getValG() < e2.getValG()){
-			return 1;
 		}else if(e1.getValG() > e2.getValG()){
+			return 1;
+		}else if(e1.getValG() < e2.getValG()){
 			return -1;
 		}
 		return 0;

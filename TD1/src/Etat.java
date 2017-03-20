@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public class Etat{
+
 	/**
 	 * Le labyrinthe courant.
 	 */
@@ -65,7 +66,7 @@ public class Etat{
 		this._yCour=lab.getYEntree();
 		this._pere=null;
 		this._valG=0;
-		this._valF= heurist==null?0:this._valG+heurist.heuristique(this);//???????
+		this._valF= heurist==null?0:this._valG+heurist.heuristique(this);
 		this._coups=new ArrayList<>();
 	}
 	
@@ -75,7 +76,7 @@ public class Etat{
 	 * @param lab : le labyrinthe courant.
 	 */
 	public Etat(Labyrinthe lab){
-		this(lab, new HeuristiqueEuclidienne());
+		this(lab, null);
 	}
 	
 	
@@ -238,9 +239,7 @@ public class Etat{
 	 * @param heurist : la fonction heuristique utilisée pour étendre l'état.
 	 * @return l'état créé à partir de l'état courant
 	 */
-	//TODO
 	public Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
-//		System.out.println("bug");
 		Etat e=new Etat(this);
         List<Deplacement> l = new ArrayList<>();
         l.addAll(this._coups);
@@ -248,7 +247,6 @@ public class Etat{
 		e.set_coups(l);
 		e.set_pere(this);
 		e.set_valG(getValG()+1);
-		e.set_valF(e.getValG()+heurist.heuristique(e));
 
 		switch(d){
 			case haut:
@@ -264,6 +262,8 @@ public class Etat{
 				e.set_xCour(this._xCour+1);
 				break;
 		}
+		e.set_valF(e.getValG()+heurist.heuristique(e));
+
 		return e;
 	}
 	
@@ -276,14 +276,6 @@ public class Etat{
 	 * @return les états successeurs créés.
 	 */
 	public List<Etat> getSuccesseurs(FonctionHeuristique heurist){
-//		List<Etat> l = new ArrayList<>();
-//		Arrays.stream(Deplacement.values()).forEach(dep -> {
-//			if (this.deplacementPossible(dep)) {
-//				l.add(this.etendEtat(dep, heurist));
-//			}
-//		});
-//		return l;
-
 		return Arrays.stream(Deplacement.values())
 				.filter(this::deplacementPossible)
 				.collect(ArrayList::new,
@@ -306,15 +298,62 @@ public class Etat{
 
 		if (_xCour != etat._xCour) return false;
 		if (_yCour != etat._yCour) return false;
-		return _labyrinthe != null ? _labyrinthe.equals(etat._labyrinthe) : etat._labyrinthe == null;
-
+//		return _labyrinthe != null ? _labyrinthe.equals(etat._labyrinthe) : etat._labyrinthe == null;
+		return true;
 	}
 
 	/**
 	 * Méthode qui affiche la séquence de configurations.
 	 */
 	public void afficherParcours(){
+
 		System.out.println(this._coups);
+
+		boolean[][] labyrinthe = _labyrinthe.get_labyrinthe();
+
+		String lab[][]= new String[labyrinthe.length][labyrinthe[0].length];
+		for (int i=0; i<lab.length;i++){
+			for (int j = 0; j< labyrinthe[0].length; j++){
+				if(labyrinthe[i][j]){
+					lab[i][j]=" ";
+				}else{
+					lab[i][j]="x";
+				}
+			}
+		}
+
+		int i = _labyrinthe.getYEntree();
+		int j = _labyrinthe.getXEntree();
+		for (Deplacement deplacement : this._coups) {
+			switch (deplacement) {
+				case haut:
+					lab[i][j] = "↑";
+					i -= 1;
+					break;
+				case bas:
+					lab[i][j] = "↓";
+					i += 1;
+					break;
+				case gauche:
+					lab[i][j] = "←";
+					j -= 1;
+					break;
+				case droite:
+					lab[i][j] = "→";
+					j += 1;
+					break;
+			}
+		}
+
+
+		System.out.println("\u250c\u2500\u2500\u2500\u252c---+---+---+---+");
+		Arrays.stream(lab).forEach(strings -> {
+			Arrays.stream(strings).forEach(s -> System.out.print("| "+s+" "));
+			System.out.println("|");
+			System.out.println("\u251c\u2500\u2500\u2500\u253c---+---+---+---+");
+		});
+		System.out.println("+---+---+---+---+---+");
+
 	}
 	
 	/**

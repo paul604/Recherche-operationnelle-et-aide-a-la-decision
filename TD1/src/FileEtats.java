@@ -34,10 +34,10 @@ public class FileEtats {
 	 * @return l'élément recherché, s'il existe (null sinon).
 	 */
 	public Etat get(Etat elem){
-		if (!this._fileEtats.contains(elem)) {
-			return null;
-		}
-		return this._fileEtats.stream().filter(val -> val.equals(elem)).findFirst().get();
+//		if (!this._fileEtats.contains(elem)) {
+//			return null;
+//		}
+		return this._fileEtats.stream().filter(val -> val.equals(elem)).findFirst().orElse(null);
 	}
 	
 	
@@ -59,9 +59,9 @@ public class FileEtats {
 	 * @return l'élément en tête de file qui a été ôté.
 	 */
 	public Etat first(){
-		return this.isEmpty()?null:this._fileEtats.iterator().next();
+		return this._fileEtats.poll();
 	}
-	
+
 	
 	/**
 	 * Méthode qui indique si la file est vide ou non.

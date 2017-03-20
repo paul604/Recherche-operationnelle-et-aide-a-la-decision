@@ -12,7 +12,7 @@
 
 public enum Deplacement {
 	haut, bas, gauche, droite;
-	
+//	droite, bas, gauche,  haut;
 	
 	/**
 	 * Méthode qui transforme le déplacement en une chaîne de caractères.

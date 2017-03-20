@@ -39,10 +39,11 @@ public class SetEtats {
 	 * @return l'élément recherché, s'il existe (null sinon).
 	 */
 	public Etat get(Etat elem){
-		if (!this._ensembleEtats.contains(elem)) {
-			return null;
-		}
-		return this._ensembleEtats.stream().filter(val -> val.equals(elem)).findFirst().get();
+//		if (!this._ensembleEtats.contains(elem)) {
+//			System.out.println("test");
+//			return null;
+//		}
+		return this._ensembleEtats.stream().filter(val -> val.equals(elem)).findFirst().orElse(null);
 	}
 
 
@@ -62,7 +63,7 @@ public class SetEtats {
 	public void remove(Etat etat) {
 		this._ensembleEtats.remove(etat);
 	}
-	
+
 	
 	/**
 	 * Méthode qui donne la représentation de la file.

@@ -23,8 +23,8 @@ public class HeuristiqueManhattan implements FonctionHeuristique {
 	public int heuristique(Etat e) {
 		int xCour = e.getX();
 		int yCour = e.getY();
-		int xFin = e.get_labyrinthe().getXSortie();
-		int yFin = e.get_labyrinthe().getYSortie();
+		int xFin = e.get_labyrinthe().getYSortie();
+		int yFin = e.get_labyrinthe().getXSortie();
 
 		return abs(xCour-xFin)+abs(yCour-yFin);
 	}

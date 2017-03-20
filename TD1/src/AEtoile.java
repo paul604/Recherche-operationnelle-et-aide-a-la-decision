@@ -22,28 +22,27 @@ public class AEtoile {
 	public static Etat algoAEtoile(Etat etatInit, FonctionHeuristique heurist){
 		FileEtats ouvert = new FileEtats();
 		ouvert.add(etatInit);
-		List<Etat> fermes = new ArrayList<>();
+		SetEtats fermes = new SetEtats();
 		Etat etatFinal=null;
-		Etat etat;
+//		Etat etat;
 
 		while (!ouvert.isEmpty() && etatFinal==null){
-//			System.out.println("1");
-			etat=ouvert.first();
-//			System.out.println(etat);
+			Etat etat=ouvert.first();
 			if(etat.estFinal()){
 				etatFinal=etat;
 			}else{
 				fermes.add(etat);
 				etat.getSuccesseurs(heurist).forEach(succ ->{
-					if (fermes.contains(succ)){
-						Etat succFerme = fermes.get(fermes.indexOf(succ));
-						if(heurist.heuristique(succ)< heurist.heuristique(succFerme)){
+//					System.out.println(fermes.get(succ));
+					if (fermes.get(succ)!=null){
+						Etat succFerme = fermes.get(succ);
+						if(succ.getValF()<succFerme.getValF()){
 							fermes.remove(succFerme);
 							ouvert.add(succ);
 						}
 					}else if(ouvert.get(succ)!=null){
 						Etat succOuver = ouvert.get(succ);
-						if(heurist.heuristique(succ)< heurist.heuristique(succOuver)){
+						if(succ.getValF()<succOuver.getValF()){
 							ouvert.remove(succOuver);
 							ouvert.add(succ);
 						}
@@ -52,7 +51,7 @@ public class AEtoile {
 					}
 
 //					System.out.println(succ);
-
+//					System.out.println(etat);
 				});
 			}
 		}

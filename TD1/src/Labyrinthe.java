@@ -91,6 +91,10 @@ public class Labyrinthe {
 		return this._ySortie;
 	}
 
+	public boolean[][] get_labyrinthe() {
+		return _labyrinthe;
+	}
+
 	/**
 	 * Méthode qui indique si la case de coordonnées données est accessible ou non.
 	 * @param x : l'abscisse de la case.
@@ -126,7 +130,7 @@ public class Labyrinthe {
 	@Override
 	public String toString() {
 		return "Labyrinthe{" +
-				"_labyrinthe=" + Arrays.toString(_labyrinthe) +
+				"_labyrinthe=" + _labyrinthe +
 				", _xEntree=" + _xEntree +
 				", _yEntree=" + _yEntree +
 				", _xSortie=" + _xSortie +
