@@ -317,7 +317,7 @@ public class Etat{
 				if(labyrinthe[i][j]){
 					lab[i][j]=" ";
 				}else{
-					lab[i][j]="x";
+					lab[i][j]="\u25A0";
 				}
 			}
 		}
@@ -346,11 +346,19 @@ public class Etat{
 		}
 
 
-		System.out.println("\u250c\u2500\u2500\u2500\u252c---+---+---+---+");
+		System.out.println("\u250c\u2500\u2500\u2500\u252c"+
+				"\u2500\u2500\u2500\u252c" +
+				"\u2500\u2500\u2500\u252c" +
+				"\u2500\u2500\u2500\u252c" +
+				"\u2500\u2500\u2500\u2510");
 		Arrays.stream(lab).forEach(strings -> {
 			Arrays.stream(strings).forEach(s -> System.out.print("| "+s+" "));
 			System.out.println("|");
-			System.out.println("\u251c\u2500\u2500\u2500\u253c---+---+---+---+");
+			System.out.println("\u251c\u2500\u2500\u2500\u253c" +
+					"\u2500\u2500\u2500\u253c" +
+					"\u2500\u2500\u2500\u253c" +
+					"\u2500\u2500\u2500\u253c" +
+					"\u2500\u2500\u2500\u2524");
 		});
 		System.out.println("+---+---+---+---+---+");
 
