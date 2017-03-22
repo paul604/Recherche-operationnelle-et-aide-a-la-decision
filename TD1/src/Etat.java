@@ -360,7 +360,7 @@ public class Etat{
 					"\u2500\u2500\u2500\u253c" +
 					"\u2500\u2500\u2500\u2524");
 		});
-		System.out.println("+---+---+---+---+---+");
+//		System.out.println("\u2502   \u2502   \u2502   \u2502   \u2502   \u2502");
 
 	}
 	
