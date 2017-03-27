@@ -22,12 +22,12 @@ public class ApplicationLabyrinthes {
 			{true, true, false, false, true},
 			{true, true, true, true, true}};
 	public static final boolean[][] TAB_LABYRINTHE_2 = {
-			{true, true, true, true, true},
-			{true, true, false, true, false},
-			{false, true, false, true, false},
-			{false, true, false, true, true},
-			{true, true, false, false, true},
-			{true, true, true, true, true}};
+			{true, true, false, true, true, true},
+			{true, true, true, false, false, true},
+			{false, true, false, true, false, true},
+			{false, true, true, true, true, true},
+			{true, true, false, false, true, true},
+			{true, true, true, true, true, true}};
 	public static final int ENTREE_X = 0;
 	public static final int ENTREE_Y = 1;
 	public static final int SORTIE_X = 4;
@@ -43,7 +43,7 @@ public class ApplicationLabyrinthes {
 
 		//heuristique 1
 		System.out.println("Algorithme A* avec l'heuristique euclidienne");
-		Labyrinthe lab1 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
+		Labyrinthe lab1 = new Labyrinthe(TAB_LABYRINTHE_2, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
 
 
 		ResolutionLabyrinthe resolLab1 = new ResolutionLabyrinthe(new Etat(lab1, new HeuristiqueEuclidienne()), new HeuristiqueEuclidienne());
@@ -61,7 +61,7 @@ public class ApplicationLabyrinthes {
 
 		//heuristique 2
 		System.out.println("Algorithme A* avec l'heuristique de Manhattan");
-		Labyrinthe lab2 = new Labyrinthe(TAB_LABYRINTHE_1, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
+		Labyrinthe lab2 = new Labyrinthe(TAB_LABYRINTHE_2, ENTREE_X, ENTREE_Y, SORTIE_X, SORTIE_Y);
 		ResolutionLabyrinthe resolLab2 = new ResolutionLabyrinthe(new Etat(lab2, new HeuristiqueManhattan()), new HeuristiqueManhattan());
 		Etat etatFinal2 = resolLab2.getEtatFinal();
 		if(etatFinal2 != null){

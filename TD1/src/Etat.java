@@ -345,20 +345,19 @@ public class Etat{
 			}
 		}
 
+		StringBuilder hed=new StringBuilder("\u250c\u2500\u2500\u2500\u252c");
+		StringBuilder content = new StringBuilder("\u251c\u2500\u2500\u2500\u253c");
+		for (int z = 1; z<labyrinthe[0].length-1; z++) {
+			hed.append("\u2500\u2500\u2500\u252c");
+			content.append("\u2500\u2500\u2500\u253c");
+		}
+		System.out.println(hed.append("\u2500\u2500\u2500\u2510"));
+		content.append("\u2500\u2500\u2500\u2524");
 
-		System.out.println("\u250c\u2500\u2500\u2500\u252c"+
-				"\u2500\u2500\u2500\u252c" +
-				"\u2500\u2500\u2500\u252c" +
-				"\u2500\u2500\u2500\u252c" +
-				"\u2500\u2500\u2500\u2510");
 		Arrays.stream(lab).forEach(strings -> {
 			Arrays.stream(strings).forEach(s -> System.out.print("| "+s+" "));
 			System.out.println("|");
-			System.out.println("\u251c\u2500\u2500\u2500\u253c" +
-					"\u2500\u2500\u2500\u253c" +
-					"\u2500\u2500\u2500\u253c" +
-					"\u2500\u2500\u2500\u253c" +
-					"\u2500\u2500\u2500\u2524");
+			System.out.println(content);
 		});
 //		System.out.println("\u2502   \u2502   \u2502   \u2502   \u2502   \u2502");
 
